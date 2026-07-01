@@ -91,7 +91,7 @@ export default function AwardsSection() {
                   alt={award.caption}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-300 ease-smooth group-hover:scale-[1.03]"
+                  className="object-cover object-top transition-transform duration-300 ease-smooth group-hover:scale-[1.03]"
                 />
               </div>
               <figcaption className="px-4 py-4 text-center text-sm italic text-muted">
