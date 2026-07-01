@@ -28,21 +28,17 @@ export default function FounderProfile() {
         ref={ref}
         className="container-content grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16"
       >
-        {/* Photo — TODO: replace with real portrait of Dr. Ajay Agarwal. */}
+        {/* Founder portrait */}
         <div data-reveal className="order-first">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-surface shadow-soft">
             <Image
-              src="/placeholders/doctor.svg"
-              alt="Dr. Ajay Agarwal, Founder & Director of Elavive Physio"
+              src="/images/dr-ajay-agarwal.png"
+              alt="Dr. Ajay Agarwal, Founder and Director of Elavive Physio, Jaipur"
               fill
               sizes="(max-width: 1024px) 100vw, 45vw"
               className="object-cover"
-              unoptimized
             />
             <div className="absolute inset-0 bg-gradient-to-t from-teal/20 to-transparent" />
-            <span className="absolute left-3 top-3 rounded-full bg-charcoal/70 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-              TODO: replace with real portrait
-            </span>
           </div>
         </div>
 

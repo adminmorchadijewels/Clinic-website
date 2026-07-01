@@ -1,12 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { Icon } from "../Icons";
 
 /**
- * SECTION 2 — Clinic story. Two-column on desktop (copy left, image right),
- * single column on mobile. The image is a styled placeholder until a real
- * clinic photo is supplied.
+ * SECTION 2 — Clinic story. Two-column on desktop (copy left, photo gallery
+ * right), single column on mobile. The gallery shows real clinic photos.
  */
 export default function ClinicStory() {
   const ref = useScrollReveal<HTMLDivElement>({
@@ -41,21 +40,37 @@ export default function ClinicStory() {
           </p>
         </div>
 
-        {/* Image — TODO: replace with real clinic photo. */}
+        {/* Clinic photo gallery: one tall image left, two stacked right on
+            desktop; all three stacked on mobile. */}
         <div data-reveal className="order-first lg:order-none">
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-gradient-to-br from-[#eef4f0] to-[#e2ede6] shadow-soft">
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-teal/10 blur-2xl"
-            />
-            <div className="absolute inset-0 grid place-items-center">
-              <span className="grid h-20 w-20 place-items-center rounded-2xl bg-white/70 text-teal shadow-soft backdrop-blur">
-                <Icon name="rehab" width={38} height={38} />
-              </span>
+          <div className="grid grid-cols-1 gap-4 sm:h-[480px] sm:grid-cols-2 sm:grid-rows-2">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft sm:aspect-auto sm:row-span-2 sm:h-full">
+              <Image
+                src="/images/clinic-treatment-room.png"
+                alt="Elavive Physio treatment room with physiotherapy equipment, Jaipur"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                className="object-cover"
+              />
             </div>
-            <span className="absolute left-3 top-3 rounded-full bg-charcoal/70 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-              TODO: replace with real clinic photo
-            </span>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft sm:aspect-auto sm:h-full">
+              <Image
+                src="/images/clinic-reception.png"
+                alt="Elavive Physio reception and front desk, Milap Nagar Jaipur"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 25vw, 12vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft sm:aspect-auto sm:h-full">
+              <Image
+                src="/images/clinic-office.png"
+                alt="Elavive Physio consultation area, Jaipur"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 25vw, 12vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>

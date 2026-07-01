@@ -66,21 +66,15 @@ export default function DoctorSpotlight() {
             data-reveal
             className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-surface shadow-soft will-change-transform"
           >
-            {/* Believable dummy headshot from pravatar (see DOCTOR in data.ts).
-                `unoptimized` skips the image optimizer. */}
             <Image
               src={DOCTOR.photo}
-              alt={`${DOCTOR.name}, founder of Elavive Physio`}
+              alt="Dr. Ajay Agarwal, Founder and Director of Elavive Physio, Jaipur"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
-              unoptimized
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-teal/20 to-transparent" />
-            {/* Visible reminder that the portrait is still a placeholder. */}
-            <span className="absolute left-3 top-3 rounded-full bg-charcoal/70 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-              TODO: replace with real portrait
-            </span>
           </div>
         </div>
 
