@@ -25,7 +25,7 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self'; frame-src https://www.google.com https://calendly.com; connect-src 'self'; object-src 'none'; base-uri 'self'",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://assets.calendly.com; img-src 'self' data: https: blob: https://assets.calendly.com; font-src 'self'; frame-src https://www.google.com https://calendly.com; connect-src 'self'; object-src 'none'; base-uri 'self'",
           },
         ],
       },

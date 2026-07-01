@@ -53,12 +53,24 @@ const config: Config = {
           "0%, 100%": { opacity: "0.25" },
           "50%": { opacity: "0.85" },
         },
+        // Chat panel entrance — slide up from the bottom with an opacity fade.
+        "chat-in": {
+          from: { opacity: "0", transform: "translateY(16px) scale(0.98)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        // Typing indicator dots.
+        "dot-bounce": {
+          "0%, 80%, 100%": { transform: "translateY(0)", opacity: "0.4" },
+          "40%": { transform: "translateY(-5px)", opacity: "1" },
+        },
       },
       animation: {
         breathe: "breathe 2.8s ease-in-out infinite",
         "fade-in": "fade-in 0.4s ease-out both",
         marquee: "marquee 45s linear infinite",
         "soft-pulse": "soft-pulse 5.5s ease-in-out infinite",
+        "chat-in": "chat-in 0.25s ease-out both",
+        "dot-bounce": "dot-bounce 1.2s ease-in-out infinite",
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.22, 1, 0.36, 1)",

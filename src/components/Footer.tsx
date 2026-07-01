@@ -1,11 +1,26 @@
 import Link from "next/link";
-import { CONTACT } from "@/lib/data";
+import { CLINIC_CONFIG } from "@/lib/config";
+import {
+  Instagram,
+  Facebook,
+  LinkedIn,
+  YouTube,
+  WhatsApp,
+} from "./Icons";
 
 const FOOTER_NAV = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
+];
+
+const SOCIAL_LINKS = [
+  { label: "Instagram", href: CLINIC_CONFIG.social.instagram, Icon: Instagram },
+  { label: "Facebook", href: CLINIC_CONFIG.social.facebook, Icon: Facebook },
+  { label: "LinkedIn", href: CLINIC_CONFIG.social.linkedin, Icon: LinkedIn },
+  { label: "YouTube", href: CLINIC_CONFIG.social.youtube, Icon: YouTube },
+  { label: "WhatsApp", href: CLINIC_CONFIG.social.whatsapp, Icon: WhatsApp },
 ];
 
 export default function Footer() {
@@ -18,15 +33,32 @@ export default function Footer() {
               Elaviv<span className="text-teal">ephysio</span>
             </span>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
-              {/* TODO: confirm final clinic address below. */}
               Jaipur&apos;s leading spine &amp; knee clinic. Evidence-based
               physiotherapy for spine, knee, sports injuries and post-surgical
               recovery.
             </p>
-            <p className="mt-4 text-sm text-muted">
-              {/* TODO: Replace with full clinic address once confirmed by Dr. Ajay Agarwal */}
-              Jaipur, Rajasthan
+            <p className="mt-4 text-sm leading-relaxed text-muted">
+              {CLINIC_CONFIG.address.line1}, {CLINIC_CONFIG.address.line2},
+              <br />
+              {CLINIC_CONFIG.address.area}, {CLINIC_CONFIG.address.city},{" "}
+              {CLINIC_CONFIG.address.state} {CLINIC_CONFIG.address.pinCode}
             </p>
+
+            {/* Social links */}
+            <div className="mt-5 flex items-center gap-3">
+              {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Elavive Physio on ${label}`}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-teal/20 text-teal transition-colors hover:bg-teal hover:text-white"
+                >
+                  <Icon width={18} height={18} />
+                </a>
+              ))}
+            </div>
           </div>
 
           <nav aria-label="Footer">
@@ -53,12 +85,19 @@ export default function Footer() {
             </h2>
             <ul className="mt-4 space-y-2.5 text-sm text-muted">
               <li>
-                {/* TODO: replace placeholder phone. */}
                 <a
-                  href={CONTACT.phoneHref}
+                  href={CLINIC_CONFIG.contact.phoneTel}
                   className="inline-flex py-2 transition-colors hover:text-teal"
                 >
-                  {CONTACT.phoneDisplay}
+                  {CLINIC_CONFIG.contact.phone}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${CLINIC_CONFIG.contact.email}`}
+                  className="inline-flex py-2 transition-colors hover:text-teal"
+                >
+                  {CLINIC_CONFIG.contact.email}
                 </a>
               </li>
               <li>

@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { TESTIMONIALS } from "@/lib/data";
+import { truncateReview } from "@/lib/utils";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { ChevronLeft, ChevronRight, Star } from "./Icons";
 import BlurText from "./BlurText";
@@ -16,7 +17,31 @@ gsap.registerPlugin(ScrollTrigger);
 const STACK_TOP = 104; // px clearance below the fixed header
 const PEEK = 16; // px each successive card is nudged down
 
+// Clinic's Google Business Profile — used by the per-card and section-level
+// "read reviews on Google" links.
+const GOOGLE_REVIEWS_URL =
+  "https://www.google.com/maps/search/Elavive+Physio+Spine+and+Knee+Clinic+Jaipur";
+
 type Testimonial = (typeof TESTIMONIALS)[number];
+
+// Small inline external-link arrow (↗).
+function ExternalArrow() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M7 17L17 7M9 7h8v8" />
+    </svg>
+  );
+}
 
 // Shared card contents — identical between the mobile stack and desktop carousel.
 function CardBody({ t }: { t: Testimonial }) {
@@ -34,12 +59,20 @@ function CardBody({ t }: { t: Testimonial }) {
         ))}
       </div>
       <blockquote className="flex-1 text-lg leading-relaxed text-charcoal/85">
-        &ldquo;{t.quote}&rdquo;
+        &ldquo;{truncateReview(t.quote)}&rdquo;
       </blockquote>
       <figcaption className="mt-6 border-t border-teal/10 pt-4">
         <span className="block font-medium text-charcoal">{t.name}</span>
         <span className="block text-sm text-muted">{t.condition}</span>
       </figcaption>
+      <a
+        href={GOOGLE_REVIEWS_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors hover:text-coral"
+      >
+        Read on Google <ExternalArrow />
+      </a>
     </>
   );
 }
@@ -139,8 +172,7 @@ export default function Testimonials() {
         {/* Dev-only reminder that testimonials are placeholders. Not rendered in production. */}
         {process.env.NODE_ENV === "development" && (
           <div className="mb-6 rounded-lg border border-yellow-400 bg-yellow-100 px-4 py-2 text-sm font-medium text-yellow-900">
-            ⚠️ PLACEHOLDER TESTIMONIALS — Replace with real patient reviews before
-            launch
+            ⚠️ USING REAL GOOGLE REVIEWS — Verify patient consent before launch
           </div>
         )}
         <div className="mb-10 max-w-xl">
@@ -156,7 +188,7 @@ export default function Testimonials() {
         <div className="relative mx-auto max-w-3xl md:hidden">
           {TESTIMONIALS.map((t, i) => (
             <div
-              key={t.name}
+              key={t.id}
               data-stack-item
               className={reducedMotion ? "mb-4" : "sticky"}
               style={reducedMotion ? undefined : { top: STACK_TOP + i * PEEK }}
@@ -180,7 +212,7 @@ export default function Testimonials() {
           >
             {TESTIMONIALS.map((t) => (
               <figure
-                key={t.name}
+                key={t.id}
                 className="flex shrink-0 snap-center flex-col rounded-2xl border border-teal/10 bg-surface p-7 md:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]"
               >
                 <CardBody t={t} />
@@ -202,7 +234,7 @@ export default function Testimonials() {
             <div className="flex items-center gap-2">
               {TESTIMONIALS.map((t, i) => (
                 <button
-                  key={t.name}
+                  key={t.id}
                   type="button"
                   onClick={() => scrollToIndex(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
@@ -223,6 +255,18 @@ export default function Testimonials() {
               <ChevronRight />
             </button>
           </div>
+        </div>
+
+        {/* Section-level CTA to the full Google Business Profile */}
+        <div className="mt-12 flex justify-center">
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary"
+          >
+            See All Google Reviews <ExternalArrow />
+          </a>
         </div>
       </div>
     </section>

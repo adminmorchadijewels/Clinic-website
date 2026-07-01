@@ -225,7 +225,7 @@ export default function ServiceDetail({ slug }: { slug: ServiceSlug }) {
             >
               {testimonials.map((t) => (
                 <figure
-                  key={t.name}
+                  key={t.id}
                   data-reveal
                   className="flex flex-col rounded-2xl border border-teal/10 bg-white p-7 shadow-soft"
                 >

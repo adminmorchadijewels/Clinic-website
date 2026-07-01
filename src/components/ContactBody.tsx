@@ -1,31 +1,24 @@
 "use client";
 
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { CONTACT, whatsappLink } from "@/lib/data";
+import { CLINIC_CONFIG } from "@/lib/config";
 import { MapPin, Phone, Clock, WhatsApp } from "./Icons";
 import ClipReveal from "./ClipReveal";
 import CalendlyEmbed from "./CalendlyEmbed";
 import ContactForm from "./ContactForm";
 
-// Google Maps embed centered on Jaipur, Rajasthan.
-// TODO: Update map embed URL with exact clinic address once confirmed.
-const MAP_SRC =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227748.3824845585!2d75.61358039999999!3d26.8861111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C+Rajasthan!5e0!3m2!1sen!2sin!4v1234567890";
+// Map embed + "Get Directions" link come from CLINIC_CONFIG (src/lib/config.ts).
+// TODO: Update iframe src with exact embed URL from Google Maps > Share > Embed a map once clinic verifies the pin
+const MAP_SRC = CLINIC_CONFIG.address.googleMapsEmbed;
+const DIRECTIONS_URL = CLINIC_CONFIG.address.googleMapsLink;
 
 const WHY_POINTS = [
   "Evidence-based treatment, not guesswork",
   "Personalized plans for your specific condition",
   "Internationally certified physiotherapist",
   "4,000+ patients successfully treated",
-  "4.9★ Google Rating",
+  "5.0★ Google Rating",
 ];
-
-// Small monospace TODO note, matching the placeholder style used elsewhere.
-function TodoNote({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="mt-3 font-mono text-xs text-muted/70">{"// "}{children}</p>
-  );
-}
 
 export default function ContactBody() {
   const cardsRef = useScrollReveal<HTMLDivElement>({
@@ -71,14 +64,17 @@ export default function ContactBody() {
       <section id="booking" className="scroll-mt-24 section-padding bg-white">
         <div className="container-content">
           <div className="mb-10 max-w-2xl">
-            <p className="eyebrow mb-3">Book Your Appointment</p>
+            <p className="eyebrow mb-3">Booking</p>
             <h2 className="font-heading text-3xl font-light text-charcoal sm:text-4xl">
-              Choose a time that works for you
+              Book Your Appointment
             </h2>
             <p className="mt-4 leading-relaxed text-muted">
-              Dr. Agarwal&apos;s calendar is available online. Pick a slot and
-              we&apos;ll confirm within 24 hours.
+              Choose a time that works for you. Dr. Agarwal&apos;s calendar is
+              live — pick a slot and you will receive instant confirmation.
             </p>
+            <span className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-teal/10 px-3.5 py-1.5 text-sm font-semibold text-teal">
+              ✓ Cashless / TPA Accepted
+            </span>
           </div>
           <CalendlyEmbed />
         </div>
@@ -105,8 +101,12 @@ export default function ContactBody() {
               <p className="mt-3 font-medium text-charcoal">
                 Elavive Physio — Spine &amp; Knee Clinic
               </p>
-              <p className="mt-1 text-muted">Jaipur, Rajasthan</p>
-              <TodoNote>TODO: Add full street address</TodoNote>
+              <p className="mt-1 leading-relaxed text-muted">
+                {CLINIC_CONFIG.address.line1},<br />
+                {CLINIC_CONFIG.address.line2},<br />
+                {CLINIC_CONFIG.address.area}, {CLINIC_CONFIG.address.city},{" "}
+                {CLINIC_CONFIG.address.state} {CLINIC_CONFIG.address.pinCode}
+              </p>
             </div>
 
             {/* Card 2 — Phone & WhatsApp */}
@@ -122,15 +122,15 @@ export default function ContactBody() {
               </h3>
               <p className="mt-3">
                 <a
-                  href={CONTACT.phoneHref}
+                  href={CLINIC_CONFIG.contact.phoneTel}
                   className="font-medium text-charcoal transition-colors hover:text-teal"
                 >
-                  {CONTACT.phoneDisplay}
+                  {CLINIC_CONFIG.contact.phone}
                 </a>
               </p>
               <p className="mt-1">
                 <a
-                  href={whatsappLink()}
+                  href={CLINIC_CONFIG.contact.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-muted transition-colors hover:text-teal"
@@ -139,7 +139,14 @@ export default function ContactBody() {
                   Message us on WhatsApp
                 </a>
               </p>
-              <TodoNote>TODO: Replace with real clinic number</TodoNote>
+              <p className="mt-1">
+                <a
+                  href={`mailto:${CLINIC_CONFIG.contact.email}`}
+                  className="text-muted transition-colors hover:text-teal"
+                >
+                  {CLINIC_CONFIG.contact.email}
+                </a>
+              </p>
             </div>
 
             {/* Card 3 — Hours */}
@@ -154,10 +161,9 @@ export default function ContactBody() {
                 Clinic Hours
               </h3>
               <p className="mt-3 font-medium text-charcoal">
-                Monday to Saturday: 9:00 AM to 7:00 PM
+                {CLINIC_CONFIG.hours.weekdays}
               </p>
-              <p className="mt-1 text-muted">Sunday: By appointment only</p>
-              <TodoNote>TODO: Confirm real hours with Dr. Agarwal</TodoNote>
+              <p className="mt-1 text-muted">{CLINIC_CONFIG.hours.sunday}</p>
             </div>
           </div>
         </div>
@@ -168,9 +174,6 @@ export default function ContactBody() {
         <div className="container-content" ref={mapRef}>
           <div data-reveal className="mb-6 max-w-2xl">
             <p className="eyebrow mb-3">Find Our Clinic</p>
-            <TodoNote>
-              TODO: Update map embed URL with exact clinic address once confirmed
-            </TodoNote>
           </div>
           <div
             data-reveal
@@ -185,6 +188,17 @@ export default function ContactBody() {
               allowFullScreen
               className="h-[280px] w-full border-0 sm:h-[420px]"
             />
+          </div>
+          <div data-reveal className="mt-4">
+            <a
+              href={DIRECTIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-teal transition-colors hover:text-teal/70"
+            >
+              <MapPin width={18} height={18} />
+              Get Directions
+            </a>
           </div>
         </div>
       </section>

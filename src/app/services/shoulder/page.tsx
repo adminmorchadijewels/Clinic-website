@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import ServiceDetail from "@/components/ServiceDetail";
 import { SERVICE_DETAILS } from "@/lib/data";
 
@@ -32,7 +31,6 @@ export default function ShoulderPage() {
         <ServiceDetail slug="shoulder" />
       </main>
       <Footer />
-      <WhatsAppButton />
     </>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
+import ChatBot from "@/components/ChatBot";
 
 // Editorial humanist serif for headings (light weights), Inter for body readability.
 const fraunces = Fraunces({
@@ -75,6 +76,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <StructuredData />
         {children}
+        <ChatBot />
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { whatsappLink } from "@/lib/data";
+import { CLINIC_CONFIG } from "@/lib/config";
 import { ArrowRight, WhatsApp } from "./Icons";
 import BlurText from "./BlurText";
 
@@ -71,9 +71,8 @@ export default function CtaBanner({
               <ArrowRight width={18} height={18} />
             </Link>
             {showWhatsApp && (
-              /* TODO: replace WhatsApp number in src/lib/data.ts */
               <a
-                href={whatsappLink()}
+                href={CLINIC_CONFIG.contact.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-sm font-semibold text-white backdrop-blur transition-all duration-300 ease-smooth hover:scale-[1.04] hover:bg-white/20 active:scale-[0.97]"

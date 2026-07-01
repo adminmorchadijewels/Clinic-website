@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 
 const CREDENTIALS =
-  "BPT, MPT (Neurology), MHA, MIAFT, MJPN, COMT, CDNT";
+  "BPT, MPT (Neurology), MBA, MIAFT, MJPN, COMT, CDNT";
 
 const STATS = [
   { value: "4+", label: "Years Experience" },
@@ -91,9 +91,11 @@ export default function FounderProfile() {
             </p>
             <p>
               He completed his Bachelor of Physiotherapy from JNU Institute of
-              Medical Sciences and Research Center, and holds multiple national
-              and international certifications, including advanced training from
-              Johns Hopkins University and Imperial College London.
+              Medical Sciences and Research Center, an MPT (Neurology) from
+              Janardan Rai Nagar Rajasthan Vidyapeeth (JRNRVU), Udaipur, and an
+              MBA in Hospital and Healthcare Management. He holds multiple
+              national and international certifications, including advanced
+              training from Johns Hopkins University and Imperial College London.
             </p>
           </div>
         </div>

@@ -7,7 +7,6 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import DoctorSpotlight from "@/components/DoctorSpotlight";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 
 // Below-the-fold sections are code-split so their JS/images don't block the
 // initial load. (ssr stays on, so the text content is still server-rendered &
@@ -39,7 +38,6 @@ export default function HomePage() {
         <FinalCTA />
       </main>
       <Footer />
-      <WhatsAppButton />
     </>
   );
 }

@@ -2,13 +2,15 @@
 
 import { useState, type FormEvent } from "react";
 import { ArrowRight, Check } from "./Icons";
+import { SERVICES } from "@/lib/data";
+import { CLINIC_CONFIG } from "@/lib/config";
 
-type FieldName = "name" | "phone" | "condition";
+type FieldName = "firstName" | "phone" | "message";
 
 const CALL_TIMES = [
   "Morning (9am – 12pm)",
   "Afternoon (12pm – 4pm)",
-  "Evening (4pm – 7pm)",
+  "Evening (4pm – 8pm)",
 ] as const;
 
 // Shared input styling — note the smooth border-color transition to teal on
@@ -19,25 +21,59 @@ const fieldBase =
 export default function ContactForm() {
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
 
     const nextErrors: Partial<Record<FieldName, string>> = {};
-    if (!(data.get("name") as string)?.trim())
-      nextErrors.name = "Please enter your full name.";
+    if (!(data.get("firstName") as string)?.trim())
+      nextErrors.firstName = "Please enter your first name.";
     if (!(data.get("phone") as string)?.trim())
       nextErrors.phone = "Please enter a phone number we can reach you on.";
-    if (!(data.get("condition") as string)?.trim())
-      nextErrors.condition = "Tell us briefly what brings you in.";
+    if (!(data.get("message") as string)?.trim())
+      nextErrors.message = "Tell us briefly what brings you in.";
 
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    // TODO: Wire form to real backend (Formspree, Supabase, or email handler).
-    setSubmitted(true);
+    const payload = {
+      firstName: (data.get("firstName") as string)?.trim(),
+      lastName: (data.get("lastName") as string)?.trim(),
+      phone: (data.get("phone") as string)?.trim(),
+      email: (data.get("email") as string)?.trim(),
+      service: (data.get("service") as string)?.trim(),
+      preferredDate: (data.get("preferredDate") as string)?.trim(),
+      preferredTime: (data.get("preferredTime") as string)?.trim(),
+      message: (data.get("message") as string)?.trim(),
+    };
+
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json().catch(() => ({ success: false }));
+      if (res.ok && result.success) {
+        setSubmitted(true);
+      } else {
+        setSubmitError(
+          `Message could not be sent. Please call us directly at ${CLINIC_CONFIG.contact.phone}`
+        );
+      }
+    } catch {
+      setSubmitError(
+        "Message could not be sent. Please call us directly at +91-8955032437"
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   // Clear a field's error as soon as the user starts correcting it.
@@ -51,7 +87,7 @@ export default function ContactForm() {
 
   return (
     <div className="relative">
-      {/* SUCCESS STATE — fades in once the form is dismissed. */}
+      {/* SUCCESS STATE — fades in once the form is submitted. */}
       <div
         aria-hidden={!submitted}
         className={`transition-opacity duration-500 ease-smooth ${
@@ -60,7 +96,6 @@ export default function ContactForm() {
             : "pointer-events-none absolute inset-0 opacity-0"
         }`}
       >
-        {/* TODO: Update this message once real form backend (Formspree/Supabase/email) is wired — change to "We've received your message and will call you within 24 hours." */}
         {submitted && (
           <div
             role="status"
@@ -70,16 +105,12 @@ export default function ContactForm() {
               <Check width={32} height={32} />
             </span>
             <h3 className="mt-6 font-heading text-2xl font-light text-charcoal">
-              Message saved
+              Message sent
             </h3>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
-              Thank you for reaching out. Once our booking system is live,
-              we&apos;ll be in touch within 24 hours. For urgent enquiries,
-              please WhatsApp or call us directly.
-            </p>
-            {/* TODO: Wire form to real backend (Formspree, Supabase, or email handler). */}
-            <p className="mt-4 font-mono text-xs text-muted/70">
-              {"// TODO: Wire form to real backend (Formspree, Supabase, or email handler)"}
+              Thank you for reaching out. We&apos;ve received your message and
+              will be in touch within 24 hours. For urgent enquiries, please
+              WhatsApp or call us directly.
             </p>
           </div>
         )}
@@ -94,117 +125,202 @@ export default function ContactForm() {
           submitted ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        {/* Full name */}
-        <div>
-          <label
-            htmlFor="name"
-            className="mb-1.5 block text-sm font-medium text-charcoal"
-          >
-            Full Name <span className="text-coral">*</span>
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            autoComplete="name"
-            placeholder="Your name"
-            onChange={() => clearError("name")}
-            aria-invalid={!!errors.name}
-            aria-describedby={errors.name ? "name-error" : undefined}
-            className={`${fieldBase} ${
-              errors.name ? "border-coral" : "border-teal/15"
-            }`}
-          />
-          {errors.name && (
-            <p id="name-error" className="mt-1.5 text-sm text-coral">
-              {errors.name}
-            </p>
-          )}
+        {/* Name row */}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="firstName"
+              className="mb-1.5 block text-sm font-medium text-charcoal"
+            >
+              First Name <span className="text-coral">*</span>
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autoComplete="given-name"
+              placeholder="First name"
+              onChange={() => clearError("firstName")}
+              aria-invalid={!!errors.firstName}
+              aria-describedby={errors.firstName ? "firstName-error" : undefined}
+              className={`${fieldBase} ${
+                errors.firstName ? "border-coral" : "border-teal/15"
+              }`}
+            />
+            {errors.firstName && (
+              <p id="firstName-error" className="mt-1.5 text-sm text-coral">
+                {errors.firstName}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor="lastName"
+              className="mb-1.5 block text-sm font-medium text-charcoal"
+            >
+              Last Name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autoComplete="family-name"
+              placeholder="Last name"
+              className={`${fieldBase} border-teal/15`}
+            />
+          </div>
         </div>
 
-        {/* Phone */}
-        <div>
-          <label
-            htmlFor="phone"
-            className="mb-1.5 block text-sm font-medium text-charcoal"
-          >
-            Phone Number <span className="text-coral">*</span>
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            placeholder="+91 XXXXX XXXXX"
-            onChange={() => clearError("phone")}
-            aria-invalid={!!errors.phone}
-            aria-describedby={errors.phone ? "phone-error" : undefined}
-            className={`${fieldBase} ${
-              errors.phone ? "border-coral" : "border-teal/15"
-            }`}
-          />
-          {errors.phone && (
-            <p id="phone-error" className="mt-1.5 text-sm text-coral">
-              {errors.phone}
-            </p>
-          )}
+        {/* Phone + Email */}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="phone"
+              className="mb-1.5 block text-sm font-medium text-charcoal"
+            >
+              Phone Number <span className="text-coral">*</span>
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              placeholder="+91 XXXXX XXXXX"
+              onChange={() => clearError("phone")}
+              aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? "phone-error" : undefined}
+              className={`${fieldBase} ${
+                errors.phone ? "border-coral" : "border-teal/15"
+              }`}
+            />
+            {errors.phone && (
+              <p id="phone-error" className="mt-1.5 text-sm text-coral">
+                {errors.phone}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="mb-1.5 block text-sm font-medium text-charcoal"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              className={`${fieldBase} border-teal/15`}
+            />
+          </div>
         </div>
 
-        {/* Condition */}
+        {/* Service */}
         <div>
           <label
-            htmlFor="condition"
+            htmlFor="service"
+            className="mb-1.5 block text-sm font-medium text-charcoal"
+          >
+            Service of interest
+          </label>
+          <select
+            id="service"
+            name="service"
+            defaultValue="General enquiry"
+            className={`${fieldBase} border-teal/15`}
+          >
+            <option value="General enquiry">General enquiry</option>
+            {SERVICES.map((s) => (
+              <option key={s.slug} value={s.name}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Preferred date + time */}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="preferredDate"
+              className="mb-1.5 block text-sm font-medium text-charcoal"
+            >
+              Preferred date
+            </label>
+            <input
+              id="preferredDate"
+              name="preferredDate"
+              type="date"
+              className={`${fieldBase} border-teal/15`}
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="preferredTime"
+              className="mb-1.5 block text-sm font-medium text-charcoal"
+            >
+              Preferred time to call
+            </label>
+            <select
+              id="preferredTime"
+              name="preferredTime"
+              defaultValue={CALL_TIMES[0]}
+              className={`${fieldBase} border-teal/15`}
+            >
+              {CALL_TIMES.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Message */}
+        <div>
+          <label
+            htmlFor="message"
             className="mb-1.5 block text-sm font-medium text-charcoal"
           >
             Condition / What brings you in?{" "}
             <span className="text-coral">*</span>
           </label>
           <textarea
-            id="condition"
-            name="condition"
+            id="message"
+            name="message"
             rows={4}
             placeholder="Briefly describe your condition or what you'd like help with."
-            onChange={() => clearError("condition")}
-            aria-invalid={!!errors.condition}
-            aria-describedby={errors.condition ? "condition-error" : undefined}
+            onChange={() => clearError("message")}
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? "message-error" : undefined}
             className={`${fieldBase} resize-y ${
-              errors.condition ? "border-coral" : "border-teal/15"
+              errors.message ? "border-coral" : "border-teal/15"
             }`}
           />
-          {errors.condition && (
-            <p id="condition-error" className="mt-1.5 text-sm text-coral">
-              {errors.condition}
+          {errors.message && (
+            <p id="message-error" className="mt-1.5 text-sm text-coral">
+              {errors.message}
             </p>
           )}
         </div>
 
-        {/* Preferred call time */}
-        <div>
-          <label
-            htmlFor="callTime"
-            className="mb-1.5 block text-sm font-medium text-charcoal"
-          >
-            Preferred time to call
-          </label>
-          <select
-            id="callTime"
-            name="callTime"
-            defaultValue={CALL_TIMES[0]}
-            className={`${fieldBase} border-teal/15`}
-          >
-            {CALL_TIMES.map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
-          </select>
-        </div>
+        {submitError && (
+          <p role="alert" className="text-sm text-coral">
+            {submitError}
+          </p>
+        )}
 
         <button
           type="submit"
-          className="btn-primary w-full sm:w-auto"
+          disabled={submitting}
+          className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
-          Send Message
+          {submitting ? "Sending…" : "Send Message"}
           <ArrowRight width={18} height={18} />
         </button>
       </form>

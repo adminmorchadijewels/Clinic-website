@@ -1,4 +1,4 @@
-import { whatsappLink } from "@/lib/data";
+import { CLINIC_CONFIG } from "@/lib/config";
 import { WhatsApp } from "./Icons";
 
 /**
@@ -9,7 +9,7 @@ import { WhatsApp } from "./Icons";
 export default function WhatsAppButton() {
   return (
     <a
-      href={whatsappLink()}
+      href={CLINIC_CONFIG.contact.whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with Elavive Physio on WhatsApp"

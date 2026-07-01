@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import ServicesExplorer from "@/components/services/ServicesExplorer";
 import CtaBanner from "@/components/CtaBanner";
 
@@ -39,7 +38,6 @@ export default function ServicesPage() {
         />
       </main>
       <Footer />
-      <WhatsAppButton />
     </>
   );
 }

@@ -39,16 +39,16 @@ const GROUPS: Group[] = [
         name: "Certified Pediatric Special Case Handler",
         org: "DISHA Foundation, Jaipur",
       },
-      { name: "Certified Posture & Ergonomics Therapist" },
       { name: "Certified Basic Life Support Provider (BLS)" },
       { name: "Certified Emergency Patient Care (ICU Management)" },
     ],
   },
   {
-    label: "Health & Fitness",
+    label: "Health, Fitness & Rehabilitation",
     items: [
       { name: "Certified Diet and Nutrition Expert", org: "IAFT, Mangalore" },
       { name: "Certified Aerobics Instructor", org: "IAFT, Mangalore" },
+      { name: "Certified Posture & Ergonomics Therapist" },
     ],
   },
   {

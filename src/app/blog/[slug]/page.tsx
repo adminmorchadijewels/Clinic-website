@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import ArticleBody from "@/components/blog/ArticleBody";
 import ArticleCard from "@/components/blog/ArticleCard";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
@@ -24,25 +23,21 @@ export async function generateMetadata({
   const article = getArticle(slug);
   if (!article) return { title: "Article not found" };
 
-  // Bare title string → the "%s | Elavive Physio" template in layout.tsx
-  // appends the brand, giving "<Title> | Elavive Physio".
-  const brandedTitle = `${article.title} | Elavive Physio`;
-  // `article.date` is a human-readable string (e.g. "24 June 2026"); coerce to
-  // an ISO timestamp for the OpenGraph publishedTime when it parses cleanly.
+  // `article.date` is an ISO date (e.g. "2026-06-15"); coerce to an ISO
+  // timestamp for the OpenGraph publishedTime when it parses cleanly.
   const parsedDate = new Date(article.date);
   const publishedTime = Number.isNaN(parsedDate.getTime())
     ? undefined
     : parsedDate.toISOString();
 
   return {
-    title: article.title,
-    description: article.excerpt,
+    // metaTitle already includes the brand suffix, so bypass the layout template.
+    title: { absolute: article.metaTitle },
+    description: article.metaDescription,
     alternates: { canonical: `/blog/${article.slug}` },
-    // TODO: Remove robots noindex once real blog content replaces the placeholder article bodies
-    robots: { index: false, follow: true },
     openGraph: {
-      title: brandedTitle,
-      description: article.excerpt,
+      title: article.metaTitle,
+      description: article.metaDescription,
       url: `https://www.elavivephysio.com/blog/${article.slug}`,
       type: "article",
       publishedTime,
@@ -50,8 +45,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: brandedTitle,
-      description: article.excerpt,
+      title: article.metaTitle,
+      description: article.metaDescription,
     },
   };
 }
@@ -165,7 +160,6 @@ export default async function ArticlePage({
         )}
       </main>
       <Footer />
-      <WhatsAppButton />
     </>
   );
 }

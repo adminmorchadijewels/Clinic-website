@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { CONTACT, HERO, whatsappLink } from "@/lib/data";
+import { HERO } from "@/lib/data";
+import { CLINIC_CONFIG } from "@/lib/config";
 import { ArrowRight, Phone, WhatsApp } from "./Icons";
 import HeroParticles from "./HeroParticles";
 import BlurText from "./BlurText";
@@ -91,9 +92,8 @@ export default function Hero() {
             </Link>
 
             <div className="flex items-center gap-2">
-              {/* TODO: replace WhatsApp number / tel in src/lib/data.ts */}
               <a
-                href={whatsappLink()}
+                href={CLINIC_CONFIG.contact.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chat with us on WhatsApp"
@@ -103,7 +103,7 @@ export default function Hero() {
                 <span className="hidden sm:inline">WhatsApp</span>
               </a>
               <a
-                href={CONTACT.phoneHref}
+                href={CLINIC_CONFIG.contact.phoneTel}
                 aria-label="Call the clinic"
                 className="btn-secondary !px-4"
               >
@@ -111,6 +111,11 @@ export default function Hero() {
                 <span className="hidden sm:inline">Call</span>
               </a>
             </div>
+
+            {/* Cashless / TPA trust pill */}
+            <span className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full bg-teal/10 px-3.5 py-1.5 text-sm font-semibold text-teal">
+              ✓ Cashless / TPA Accepted
+            </span>
           </div>
         </div>
       </div>

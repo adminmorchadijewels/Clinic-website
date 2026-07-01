@@ -42,6 +42,33 @@ export const Play = (p: IconProps) => (
   </svg>
 );
 
+// --- Social brand icons (inline SVG, no external library) --------------------
+export const Instagram = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17" cy="7" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+export const Facebook = (p: IconProps) => (
+  <svg {...base({ fill: "currentColor", stroke: "none", ...p })}>
+    <path d="M14 9V7c0-.9.6-1.2 1-1.2h2V3h-2.8C11.3 3 10 4.8 10 6.8V9H8v3h2v9h4v-9h2.4l.6-3z" />
+  </svg>
+);
+
+export const LinkedIn = (p: IconProps) => (
+  <svg {...base({ fill: "currentColor", stroke: "none", ...p })}>
+    <path d="M6.5 8A1.75 1.75 0 1 0 6.5 4.5 1.75 1.75 0 0 0 6.5 8zM5 9.5h3V20H5zM10 9.5h2.9v1.4h.04c.4-.75 1.4-1.55 2.86-1.55 3.06 0 3.6 2 3.6 4.6V20h-3v-4.6c0-1.1 0-2.5-1.5-2.5s-1.75 1.2-1.75 2.42V20H10z" />
+  </svg>
+);
+
+export const YouTube = (p: IconProps) => (
+  <svg {...base({ fill: "currentColor", stroke: "none", ...p })}>
+    <path d="M21.6 7.2a2.5 2.5 0 0 0-1.75-1.76C18.28 5 12 5 12 5s-6.28 0-7.85.44A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.75 1.76C5.72 19 12 19 12 19s6.28 0 7.85-.44a2.5 2.5 0 0 0 1.75-1.76A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z" />
+  </svg>
+);
+
 export const Menu = (p: IconProps) => (
   <svg {...base(p)}>
     <path d="M4 7h16M4 12h16M4 17h16" />
@@ -213,6 +240,12 @@ const PATHS: Record<string, ReactElement> = {
     <>
       <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z" />
       <circle cx="12" cy="10" r="2.5" />
+    </>
+  ),
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" />
     </>
   ),
 };

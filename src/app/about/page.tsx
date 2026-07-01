@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import AboutHero from "@/components/about/AboutHero";
 import ClinicStory from "@/components/about/ClinicStory";
 import MissionVision from "@/components/about/MissionVision";
@@ -44,7 +43,6 @@ export default function AboutPage() {
         <AboutCTA />
       </main>
       <Footer />
-      <WhatsAppButton />
     </>
   );
 }
