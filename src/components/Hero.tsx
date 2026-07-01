@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { CONTACT, whatsappLink } from "@/lib/data";
+import { CONTACT, HERO, whatsappLink } from "@/lib/data";
 import { ArrowRight, Phone, WhatsApp } from "./Icons";
 import HeroParticles from "./HeroParticles";
 import BlurText from "./BlurText";
@@ -56,42 +56,37 @@ export default function Hero() {
         <div className="max-w-xl">
           {/* Real, crawlable H1. */}
           <h1 className="sr-only-seo">
-            Elavivephysio — Modern Physiotherapy Clinic in Jaipur for back pain,
-            knee &amp; joint pain, sports injuries, and post-surgical
-            rehabilitation.
+            Elavive Physio, Spine &amp; Knee Clinic in Jaipur. Advanced
+            physiotherapy for spine, knee, sports injuries, and post-surgical
+            recovery.
           </h1>
 
-          <p className="eyebrow pointer-events-auto mb-4">
-            Jaipur&apos;s Modern Physiotherapy Clinic
-          </p>
+          <p className="eyebrow pointer-events-auto mb-4">{HERO.eyebrow}</p>
 
           {/* Visible display headline (aria-hidden so SR users hear the H1 once).
               Word-by-word blur-up reveal; line 2 chains after line 1's words. */}
-          {/* TODO: choose final headline from options in src/lib/data.ts */}
           <p
             aria-hidden="true"
-            className="font-heading text-[2.6rem] font-light leading-[1.05] tracking-tight text-charcoal sm:text-6xl lg:text-7xl"
+            className="font-heading text-4xl font-light leading-[1.05] tracking-tight text-charcoal sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            <BlurText as="span" text="Move better." />
+            <BlurText as="span" text={HERO.headlineLine1} />
             <br />
             <BlurText
               as="span"
-              text="Live fully."
+              text={HERO.headlineLine2}
               className="text-teal"
               delay={0.16}
             />
           </p>
 
           <p className="mt-5 max-w-md text-base leading-relaxed text-muted sm:text-lg">
-            Evidence-based physiotherapy for back, knee, shoulder, sports
-            injuries and post-surgical recovery — personal plans that get you
-            back in motion.
+            {HERO.subheading}
           </p>
 
           {/* CTAs */}
           <div className="pointer-events-auto mt-8 flex flex-wrap items-center gap-3">
-            <Link href="/contact#booking" className="btn-primary">
-              Book Appointment
+            <Link href={HERO.primaryCta.href} className="btn-primary">
+              {HERO.primaryCta.label}
               <ArrowRight width={18} height={18} />
             </Link>
 

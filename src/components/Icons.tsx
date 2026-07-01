@@ -54,6 +54,12 @@ export const Close = (p: IconProps) => (
   </svg>
 );
 
+export const Check = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M5 12.5l4.5 4.5L19 6.5" />
+  </svg>
+);
+
 export const ChevronLeft = (p: IconProps) => (
   <svg {...base(p)}>
     <path d="M15 6l-6 6 6 6" />
@@ -69,6 +75,30 @@ export const ChevronRight = (p: IconProps) => (
 export const Star = ({ filled = true, ...p }: IconProps & { filled?: boolean }) => (
   <svg {...base({ strokeWidth: 1.2, ...p })} fill={filled ? "currentColor" : "none"}>
     <path d="M12 3.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.5l1-5.8L3.5 9.6l5.9-.8z" />
+  </svg>
+);
+
+// Clock — used for read-time / duration labels on blog cards.
+export const Clock = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </svg>
+);
+
+// Calendar — publish date on the article header.
+export const Calendar = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="4" y="5" width="16" height="16" rx="2" />
+    <path d="M4 9h16M8 3v4M16 3v4" />
+  </svg>
+);
+
+// MapPin — location marker on the contact page.
+export const MapPin = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z" />
+    <circle cx="12" cy="10" r="2.5" />
   </svg>
 );
 
@@ -120,10 +150,45 @@ const PATHS: Record<string, ReactElement> = {
       <path d="M9 8V5h6v3M12 11v2" />
     </>
   ),
+  // Post-surgical rehab — crossed scalpel / suture motif.
+  surgery: (
+    <>
+      <path d="M4 20L14 10l-1.5-1.5a3 3 0 0 1 0-4.2l.5-.5 5.7 5.7-.5.5a3 3 0 0 1-4.2 0L12.5 8.5" />
+      <path d="M6 16l-1.5 1.5M8 18l-1.5 1.5" />
+    </>
+  ),
   neuro: (
     <>
       <path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5 3 3 0 0 0 2 4 3 3 0 0 0 5 1V4.5A2.5 2.5 0 0 0 9 4z" />
       <path d="M12 7h2a2 2 0 0 1 2 2M12 13h3a2 2 0 0 1 2 2" />
+    </>
+  ),
+  // core values (About page)
+  heart: (
+    <path d="M12 20s-7-4.4-7-9.4A3.6 3.6 0 0 1 12 7.2 3.6 3.6 0 0 1 19 10.6c0 5-7 9.4-7 9.4z" />
+  ),
+  award: (
+    <>
+      <circle cx="12" cy="9" r="5" />
+      <path d="M9 13.4L8 21l4-2 4 2-1-7.6" />
+    </>
+  ),
+  shield: (
+    <>
+      <path d="M12 3l7 3v5c0 4.4-3 7.5-7 9-4-1.5-7-4.6-7-9V6z" />
+      <path d="M9.3 12l1.9 1.9L15 10.2" />
+    </>
+  ),
+  bulb: (
+    <>
+      <path d="M9.5 18h5M10.5 21h3" />
+      <path d="M12 3a6 6 0 0 0-3.8 10.6c.6.6.8 1.1.8 2.4h6c0-1.3.2-1.8.8-2.4A6 6 0 0 0 12 3z" />
+    </>
+  ),
+  growth: (
+    <>
+      <path d="M4 18l5-5 3 3 8-8" />
+      <path d="M16 8h4v4" />
     </>
   ),
   // pillars

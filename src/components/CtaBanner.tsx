@@ -2,11 +2,30 @@
 
 import Link from "next/link";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { FINAL_CTA, whatsappLink } from "@/lib/data";
+import { whatsappLink } from "@/lib/data";
 import { ArrowRight, WhatsApp } from "./Icons";
 import BlurText from "./BlurText";
 
-export default function FinalCTA() {
+interface CtaBannerProps {
+  heading: string;
+  subheading?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** Show the secondary WhatsApp button beside the primary CTA. */
+  showWhatsApp?: boolean;
+}
+
+/**
+ * Reusable teal CTA banner — the same visual pattern as the homepage FinalCTA,
+ * parameterised for reuse across the services hub and sub-pages.
+ */
+export default function CtaBanner({
+  heading,
+  subheading,
+  ctaLabel = "Book Appointment",
+  ctaHref = "/contact#booking",
+  showWhatsApp = true,
+}: CtaBannerProps) {
   const ref = useScrollReveal<HTMLDivElement>({
     selector: "[data-cta-reveal]",
     variant: "fade-up",
@@ -32,33 +51,37 @@ export default function FinalCTA() {
         <div className="relative mx-auto max-w-2xl">
           <BlurText
             as="h2"
-            text={FINAL_CTA.heading}
+            text={heading}
             className="font-heading text-3xl font-light leading-tight text-white sm:text-5xl"
           />
-          <p data-cta-reveal className="mt-4 text-lg text-white/80">
-            {FINAL_CTA.subheading}
-          </p>
+          {subheading && (
+            <p data-cta-reveal className="mt-4 text-lg text-white/80">
+              {subheading}
+            </p>
+          )}
           <div
             data-cta-reveal
             className="mt-9 flex flex-wrap items-center justify-center gap-3"
           >
             <Link
-              href={FINAL_CTA.cta.href}
+              href={ctaHref}
               className="btn-primary focus-visible:outline-white"
             >
-              {FINAL_CTA.cta.label}
+              {ctaLabel}
               <ArrowRight width={18} height={18} />
             </Link>
-            {/* TODO: replace WhatsApp number in src/lib/data.ts */}
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-sm font-semibold text-white backdrop-blur transition-all duration-300 ease-smooth hover:scale-[1.04] hover:bg-white/20 active:scale-[0.97]"
-            >
-              <WhatsApp width={20} height={20} />
-              WhatsApp Us
-            </a>
+            {showWhatsApp && (
+              /* TODO: replace WhatsApp number in src/lib/data.ts */
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-sm font-semibold text-white backdrop-blur transition-all duration-300 ease-smooth hover:scale-[1.04] hover:bg-white/20 active:scale-[0.97]"
+              >
+                <WhatsApp width={20} height={20} />
+                WhatsApp Us
+              </a>
+            )}
           </div>
         </div>
       </div>

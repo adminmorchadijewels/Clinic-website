@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { VIDEO_TESTIMONIALS } from "@/lib/data";
+import { VIDEO_SECTION, VIDEO_TESTIMONIALS } from "@/lib/data";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { Play, Close } from "./Icons";
 import BlurText from "./BlurText";
@@ -37,7 +37,7 @@ export default function VideoTestimonials() {
       tabIndex={duplicate ? -1 : undefined}
       onClick={() => setActive(item)}
       className="group/card relative mr-4 aspect-[3/4] w-64 shrink-0 overflow-hidden rounded-2xl bg-surface shadow-soft transition-all duration-300 ease-smooth hover:-translate-y-1 hover:shadow-lift active:translate-y-0 active:scale-[0.98] sm:w-72"
-      aria-label={`Play ${item.name}'s story — ${item.condition}`}
+      aria-label={`Play ${item.name}'s story, ${item.condition}`}
     >
       {/* TODO: placeholder thumbnail — see VIDEO_TESTIMONIALS in data.ts. */}
       <Image
@@ -71,9 +71,10 @@ export default function VideoTestimonials() {
           <p className="eyebrow mb-3">Patient success stories</p>
           <BlurText
             as="h2"
-            text="Real recoveries, real patients"
+            text={VIDEO_SECTION.heading}
             className="font-heading text-3xl font-light text-charcoal sm:text-4xl lg:text-5xl"
           />
+          <p className="mt-4 text-muted">{VIDEO_SECTION.subheading}</p>
         </div>
       </div>
 
@@ -119,7 +120,7 @@ export default function VideoTestimonials() {
               type="button"
               onClick={() => setActive(null)}
               aria-label="Close video"
-              className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/30 active:scale-95"
+              className="absolute right-3 top-3 z-10 grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/30 active:scale-95"
             >
               <Close />
             </button>
@@ -139,7 +140,7 @@ export default function VideoTestimonials() {
                 <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-teal to-teal-bright text-center text-white">
                   <Play width={40} height={40} />
                   <p className="font-heading text-xl font-light">
-                    {active.name} — {active.condition}
+                    {active.name}, {active.condition}
                   </p>
                   <p className="text-sm text-white/70">
                     {/* TODO: drop in the real testimonial video file */}

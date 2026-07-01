@@ -46,11 +46,19 @@ const config: Config = {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
         },
+        // Featured-card "alive" tint — cross-fades a soft teal radial overlay
+        // between two very close tints (~#F0F3EF ↔ ~#E8F0EC). Opacity-only so it
+        // interpolates smoothly; disabled site-wide under prefers-reduced-motion.
+        "soft-pulse": {
+          "0%, 100%": { opacity: "0.25" },
+          "50%": { opacity: "0.85" },
+        },
       },
       animation: {
         breathe: "breathe 2.8s ease-in-out infinite",
         "fade-in": "fade-in 0.4s ease-out both",
         marquee: "marquee 45s linear infinite",
+        "soft-pulse": "soft-pulse 5.5s ease-in-out infinite",
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.22, 1, 0.36, 1)",

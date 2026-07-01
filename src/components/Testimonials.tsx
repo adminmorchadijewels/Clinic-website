@@ -34,7 +34,6 @@ function CardBody({ t }: { t: Testimonial }) {
         ))}
       </div>
       <blockquote className="flex-1 text-lg leading-relaxed text-charcoal/85">
-        {/* TODO: placeholder review — see TESTIMONIALS in data.ts */}
         &ldquo;{t.quote}&rdquo;
       </blockquote>
       <figcaption className="mt-6 border-t border-teal/10 pt-4">
@@ -137,6 +136,13 @@ export default function Testimonials() {
   return (
     <section className="section-padding">
       <div className="container-content" ref={stackRef}>
+        {/* Dev-only reminder that testimonials are placeholders. Not rendered in production. */}
+        {process.env.NODE_ENV === "development" && (
+          <div className="mb-6 rounded-lg border border-yellow-400 bg-yellow-100 px-4 py-2 text-sm font-medium text-yellow-900">
+            ⚠️ PLACEHOLDER TESTIMONIALS — Replace with real patient reviews before
+            launch
+          </div>
+        )}
         <div className="mb-10 max-w-xl">
           <p className="eyebrow mb-3">In their words</p>
           <BlurText

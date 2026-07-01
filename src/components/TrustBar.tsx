@@ -20,9 +20,14 @@ export default function TrustBar() {
       nums.forEach((el) => {
         const target = Number(el.dataset.counter);
         const decimals = Number(el.dataset.decimals ?? 0);
+        const format = (v: number) =>
+          v.toLocaleString("en-IN", {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals,
+          });
 
         if (reducedMotion) {
-          el.textContent = target.toFixed(decimals);
+          el.textContent = format(target);
           return;
         }
 
@@ -33,7 +38,7 @@ export default function TrustBar() {
           ease: "power2.out",
           scrollTrigger: { trigger: el, start: "top 90%", once: true },
           onUpdate: () => {
-            el.textContent = obj.v.toFixed(decimals);
+            el.textContent = format(obj.v);
           },
         });
       });
@@ -60,7 +65,6 @@ export default function TrustBar() {
             </span>
             <span>
               <span className="font-heading text-3xl font-light text-charcoal sm:text-4xl">
-                {/* TODO: placeholder stat — see STATS in src/lib/data.ts */}
                 <span
                   data-counter={stat.value}
                   data-decimals={"decimals" in stat ? stat.decimals : 0}

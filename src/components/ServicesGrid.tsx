@@ -6,9 +6,10 @@ import { useScrollReveal } from "@/lib/useScrollReveal";
 import { Icon, ArrowRight } from "./Icons";
 import BlurText from "./BlurText";
 
-// One card is featured (larger) to break the grid's symmetry. Sports injury
-// reads well as the "hero" tile of the set.
-const FEATURED_SLUG = "sports-injury";
+// One card is featured (larger) to break the grid's symmetry. Spine & back is
+// the "hero" tile — it's the clinic's core positioning (Leading Spine & Knee
+// Clinic) and the most common reason patients visit.
+const FEATURED_SLUG = "spine-back";
 
 // Consistent across every card: teal link, coral only as a hover accent.
 const exploreClasses =
@@ -65,7 +66,6 @@ export default function ServicesGrid() {
                 <Icon name={featured.icon} width={34} height={34} />
               </span>
               <h3 className="font-heading text-2xl font-medium text-charcoal lg:text-3xl">
-                {/* TODO: placeholder service — see SERVICES in src/lib/data.ts */}
                 {featured.name}
               </h3>
               <p className="mt-3 max-w-md text-base leading-relaxed text-muted">

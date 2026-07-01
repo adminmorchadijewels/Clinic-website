@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
+import StructuredData from "@/components/StructuredData";
 
 // Editorial humanist serif for headings (light weights), Inter for body readability.
 const fraunces = Fraunces({
@@ -23,35 +24,36 @@ const SITE_URL = "https://www.elavivephysio.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Elavivephysio — Modern Physiotherapy Clinic in Jaipur",
-    template: "%s | Elavivephysio",
+    default: "Elavive Physio | Spine & Knee Physiotherapy Clinic in Jaipur",
+    template: "%s | Elavive Physio",
   },
   description:
-    "Elavivephysio is Jaipur's modern physiotherapy clinic. Evidence-based treatment for back pain, knee & joint pain, sports injuries, and post-surgical rehab. 12+ years of care, 8,000+ patients treated.",
+    "Jaipur's leading spine and knee physiotherapy clinic. Evidence-based treatment by Dr. Ajay Agarwal (MPT, COMT). 4,000+ patients treated.",
   keywords: [
+    "spine clinic Jaipur",
+    "knee physiotherapy Jaipur",
     "physiotherapy Jaipur",
     "physiotherapist Jaipur",
     "back pain treatment Jaipur",
-    "knee pain physiotherapy",
     "sports injury rehab Jaipur",
     "post-surgical rehabilitation",
-    "Elavivephysio",
+    "Elavive Physio",
   ],
-  authors: [{ name: "Elavivephysio" }],
+  authors: [{ name: "Elavive Physio" }],
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: SITE_URL,
-    siteName: "Elavivephysio",
-    title: "Elavivephysio — Modern Physiotherapy Clinic in Jaipur",
+    siteName: "Elavive Physio",
+    title: "Elavive Physio | Spine & Knee Physiotherapy Clinic in Jaipur",
     description:
-      "Move better, live fully. Evidence-based physiotherapy in Jaipur for back, knee, shoulder, sports injuries and post-surgical recovery.",
+      "Jaipur's leading spine and knee physiotherapy clinic. Evidence-based treatment by Dr. Ajay Agarwal (MPT, COMT). 4,000+ patients treated.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Elavivephysio — Modern Physiotherapy Clinic in Jaipur",
+    title: "Elavive Physio | Spine & Knee Physiotherapy Clinic in Jaipur",
     description:
-      "Move better, live fully. Evidence-based physiotherapy in Jaipur.",
+      "Jaipur's leading spine and knee physiotherapy clinic. Evidence-based treatment by Dr. Ajay Agarwal. 4,000+ patients treated.",
   },
   robots: { index: true, follow: true },
   alternates: { canonical: SITE_URL },
@@ -70,7 +72,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <StructuredData />
+        {children}
+      </body>
     </html>
   );
 }

@@ -69,7 +69,7 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <Link
               href="/contact#booking"
-              className="btn-primary hidden !px-5 !py-2.5 sm:inline-flex"
+              className="btn-primary hidden !px-5 !py-3 sm:inline-flex"
             >
               Book Appointment
             </Link>
@@ -94,6 +94,7 @@ export default function Header() {
           menuOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
       >
         <div
           className={`absolute inset-0 bg-charcoal/30 backdrop-blur-sm transition-opacity duration-300 ${

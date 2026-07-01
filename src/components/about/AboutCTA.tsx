@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { FINAL_CTA, whatsappLink } from "@/lib/data";
-import { ArrowRight, WhatsApp } from "./Icons";
-import BlurText from "./BlurText";
+import { ArrowRight } from "../Icons";
+import BlurText from "../BlurText";
 
-export default function FinalCTA() {
+/**
+ * SECTION 7 — Closing CTA. Same teal banner style as the homepage FinalCTA,
+ * with a single primary action.
+ */
+export default function AboutCTA() {
   const ref = useScrollReveal<HTMLDivElement>({
     selector: "[data-cta-reveal]",
     variant: "fade-up",
@@ -32,33 +35,20 @@ export default function FinalCTA() {
         <div className="relative mx-auto max-w-2xl">
           <BlurText
             as="h2"
-            text={FINAL_CTA.heading}
+            text="Ready to start your recovery?"
             className="font-heading text-3xl font-light leading-tight text-white sm:text-5xl"
           />
           <p data-cta-reveal className="mt-4 text-lg text-white/80">
-            {FINAL_CTA.subheading}
+            Book an appointment with Dr. Ajay Agarwal today.
           </p>
-          <div
-            data-cta-reveal
-            className="mt-9 flex flex-wrap items-center justify-center gap-3"
-          >
+          <div data-cta-reveal className="mt-9 flex justify-center">
             <Link
-              href={FINAL_CTA.cta.href}
+              href="/contact#booking"
               className="btn-primary focus-visible:outline-white"
             >
-              {FINAL_CTA.cta.label}
+              Book Appointment
               <ArrowRight width={18} height={18} />
             </Link>
-            {/* TODO: replace WhatsApp number in src/lib/data.ts */}
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-sm font-semibold text-white backdrop-blur transition-all duration-300 ease-smooth hover:scale-[1.04] hover:bg-white/20 active:scale-[0.97]"
-            >
-              <WhatsApp width={20} height={20} />
-              WhatsApp Us
-            </a>
           </div>
         </div>
       </div>

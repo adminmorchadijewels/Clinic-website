@@ -70,7 +70,7 @@ export default function DoctorSpotlight() {
                 `unoptimized` skips the image optimizer. */}
             <Image
               src={DOCTOR.photo}
-              alt={`${DOCTOR.name}, founder of Elavivephysio`}
+              alt={`${DOCTOR.name}, founder of Elavive Physio`}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -93,7 +93,6 @@ export default function DoctorSpotlight() {
             data-reveal
             className="font-heading text-3xl font-light text-charcoal sm:text-4xl"
           >
-            {/* TODO: placeholder founder — see DOCTOR in src/lib/data.ts */}
             {DOCTOR.name}
           </h2>
           <p data-reveal className="mt-1 text-sm font-medium uppercase tracking-wider text-teal">
@@ -105,7 +104,7 @@ export default function DoctorSpotlight() {
           <Link
             data-reveal
             href="/about"
-            className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-coral transition-colors hover:text-[#b8481f]"
+            className="mt-7 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-coral transition-colors hover:text-[#b8481f]"
           >
             Read full story
             <ArrowRight width={16} height={16} />

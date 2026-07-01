@@ -18,13 +18,14 @@ export default function Footer() {
               Elaviv<span className="text-teal">ephysio</span>
             </span>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
-              {/* TODO: replace with real clinic blurb + address. */}
-              Jaipur&apos;s modern physiotherapy clinic. Evidence-based,
-              personal care for lasting recovery.
+              {/* TODO: confirm final clinic address below. */}
+              Jaipur&apos;s leading spine &amp; knee clinic. Evidence-based
+              physiotherapy for spine, knee, sports injuries and post-surgical
+              recovery.
             </p>
             <p className="mt-4 text-sm text-muted">
-              {/* TODO: replace placeholder address. */}
-              C-Scheme, Jaipur, Rajasthan
+              {/* TODO: Replace with full clinic address once confirmed by Dr. Ajay Agarwal */}
+              Jaipur, Rajasthan
             </p>
           </div>
 
@@ -37,7 +38,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted transition-colors hover:text-teal"
+                    className="inline-flex py-2 text-sm text-muted transition-colors hover:text-teal"
                   >
                     {link.label}
                   </Link>
@@ -55,7 +56,7 @@ export default function Footer() {
                 {/* TODO: replace placeholder phone. */}
                 <a
                   href={CONTACT.phoneHref}
-                  className="transition-colors hover:text-teal"
+                  className="inline-flex py-2 transition-colors hover:text-teal"
                 >
                   {CONTACT.phoneDisplay}
                 </a>
@@ -63,7 +64,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact#booking"
-                  className="transition-colors hover:text-teal"
+                  className="inline-flex py-2 transition-colors hover:text-teal"
                 >
                   Book an appointment
                 </Link>
@@ -74,7 +75,7 @@ export default function Footer() {
 
         <div className="mt-12 border-t border-teal/10 pt-6 text-xs text-muted">
           {/* TODO: confirm legal entity name / year. */}
-          © {new Date().getFullYear()} Elavivephysio. All rights reserved.
+          © {new Date().getFullYear()} Elavive Physio. All rights reserved.
         </div>
       </div>
     </footer>

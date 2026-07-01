@@ -17,7 +17,7 @@ export default function WhyChooseUs() {
     <section className="section-padding bg-white">
       <div className="container-content" ref={ref}>
         <div className="mb-12 max-w-2xl">
-          <p className="eyebrow mb-3">Why Elavivephysio</p>
+          <p className="eyebrow mb-3">Why Elavive Physio</p>
           <BlurText
             as="h2"
             text="Care that's measured, personal, and built to last"
@@ -32,7 +32,6 @@ export default function WhyChooseUs() {
                 <Icon name={pillar.icon} width={24} height={24} />
               </span>
               <h3 className="font-heading text-lg font-medium text-charcoal">
-                {/* TODO: placeholder pillar — see PILLARS in src/lib/data.ts */}
                 {pillar.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
