@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 import { Icon } from "../Icons";
 import BlurText from "../BlurText";
@@ -47,6 +48,8 @@ export default function CoreValues() {
     stagger: 0.08,
     duration: 0.6,
   });
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = VALUES[activeIndex];
 
   return (
     <section className="section-padding">
@@ -60,17 +63,18 @@ export default function CoreValues() {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Desktop (md+): full 3×2 card grid. */}
+        <div className="hidden gap-4 sm:grid-cols-2 md:grid lg:grid-cols-3">
           {VALUES.map((value) => (
             <div
               key={value.title}
               data-value
-              className="group rounded-2xl border border-teal/10 bg-white p-6 transition-all duration-300 ease-smooth hover:-translate-y-1.5 hover:border-teal/40 hover:shadow-lift sm:p-7"
+              className="group rounded-2xl border border-teal/10 border-b-2 border-b-transparent bg-gradient-to-b from-white to-teal/5 p-6 transition-all duration-300 ease-smooth hover:-translate-y-1 hover:border-teal/40 hover:border-b-teal hover:shadow-lift sm:p-7"
             >
-              <span className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-teal/10 text-teal transition-transform duration-300 group-hover:scale-110">
-                <Icon name={value.icon} width={24} height={24} />
+              <span className="mb-5 grid h-14 w-14 place-items-center rounded-xl bg-teal text-white transition-transform duration-300 group-hover:scale-110">
+                <Icon name={value.icon} width={26} height={26} />
               </span>
-              <h3 className="font-heading text-lg font-medium text-charcoal">
+              <h3 className="font-heading text-lg font-semibold text-charcoal">
                 {value.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -78,6 +82,42 @@ export default function CoreValues() {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Mobile (below md): pill tab switcher + one card at a time. */}
+        <div className="md:hidden">
+          <div className="grid grid-cols-3 gap-2">
+            {VALUES.map((value, i) => (
+              <button
+                key={value.title}
+                type="button"
+                onClick={() => setActiveIndex(i)}
+                aria-pressed={activeIndex === i}
+                className={`truncate rounded-full px-3 py-2 text-xs font-semibold transition-colors ${
+                  activeIndex === i
+                    ? "bg-teal text-white"
+                    : "border border-teal bg-white text-teal"
+                }`}
+              >
+                {value.title}
+              </button>
+            ))}
+          </div>
+
+          <div
+            key={activeIndex}
+            className="mt-6 rounded-2xl border border-teal/10 bg-gradient-to-b from-white to-teal/5 p-6 motion-safe:animate-[fade-in_0.2s_ease-out]"
+          >
+            <span className="mb-5 grid h-14 w-14 place-items-center rounded-xl bg-teal text-white">
+              <Icon name={active.icon} width={26} height={26} />
+            </span>
+            <h3 className="font-heading text-lg font-semibold text-charcoal">
+              {active.title}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted">
+              {active.body}
+            </p>
+          </div>
         </div>
       </div>
     </section>

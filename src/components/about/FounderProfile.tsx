@@ -1,15 +1,24 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 
-const CREDENTIALS =
-  "BPT, MPT (Neurology), MBA, MIAFT, MJPN, COMT, CDNT";
+// Each credential rendered as its own teal-outlined pill.
+const CREDENTIALS = [
+  "BPT",
+  "MPT (Neurology)",
+  "MBA",
+  "MIAFT",
+  "MJPN",
+  "COMT",
+  "CDNT",
+] as const;
 
 const STATS = [
-  { value: "4+", label: "Years Experience" },
-  { value: "4,000+", label: "Patients Treated" },
-  { value: "25+", label: "Conditions Treated" },
+  { value: "4+", label: "Years" },
+  { value: "4,000+", label: "Patients" },
+  { value: "5+", label: "Countries" },
 ] as const;
 
 /**
@@ -28,17 +37,25 @@ export default function FounderProfile() {
         ref={ref}
         className="container-content grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16"
       >
-        {/* Founder portrait */}
+        {/* Founder portrait — full-height column with name/title overlaid on a
+            teal gradient at the bottom of the photo. */}
         <div data-reveal className="order-first">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-surface shadow-soft">
+          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl bg-surface shadow-soft">
             <Image
               src="/images/dr-ajay-agarwal.png"
               alt="Dr. Ajay Agarwal, Founder and Director of Elavive Physio, Jaipur"
               fill
               sizes="(max-width: 1024px) 100vw, 45vw"
-              className="object-cover"
+              className="object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-teal/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-teal via-teal/70 to-transparent p-6 pt-20 sm:p-8 sm:pt-24">
+              <p className="font-heading text-2xl font-medium text-white sm:text-3xl">
+                Dr. Ajay Agarwal (PT)
+              </p>
+              <p className="mt-1 text-sm text-white/85">
+                Founder &amp; Director, Elavive Physio Spine &amp; Knee Clinic
+              </p>
+            </div>
           </div>
         </div>
 
@@ -48,29 +65,35 @@ export default function FounderProfile() {
           <h2 className="font-heading text-3xl font-light text-charcoal sm:text-4xl">
             Dr. Ajay Agarwal (PT)
           </h2>
-          <p className="mt-2 break-words text-sm font-medium uppercase tracking-wider text-teal">
-            {CREDENTIALS}
-          </p>
-          <p className="mt-3 text-base text-muted">
-            Founder &amp; Director, Elavive Physio Spine &amp; Knee Clinic
-          </p>
 
-          {/* Stats row */}
-          <dl className="mt-7 flex flex-wrap gap-x-8 gap-y-4 border-y border-teal/10 py-5">
+          {/* Stat strip */}
+          <dl className="mt-6 flex flex-wrap items-stretch gap-px overflow-hidden rounded-2xl border border-teal/15 bg-teal/15">
             {STATS.map((stat) => (
-              <div key={stat.label}>
-                <dt className="font-heading text-2xl font-medium text-teal">
+              <div key={stat.label} className="flex-1 bg-teal px-4 py-4 text-center">
+                <dt className="font-heading text-2xl font-medium text-white sm:text-3xl">
                   {stat.value}
                 </dt>
-                <dd className="mt-0.5 text-xs font-medium uppercase tracking-wider text-muted">
+                <dd className="mt-0.5 text-xs font-medium uppercase tracking-wider text-white/80">
                   {stat.label}
                 </dd>
               </div>
             ))}
           </dl>
 
+          {/* Credential pills */}
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {CREDENTIALS.map((cred) => (
+              <li
+                key={cred}
+                className="rounded-full border border-teal/40 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-teal"
+              >
+                {cred}
+              </li>
+            ))}
+          </ul>
+
           {/* Bio */}
-          <div className="mt-6 space-y-4 text-base leading-relaxed text-muted">
+          <div className="mt-6 space-y-4 text-lg leading-loose text-muted">
             <p>
               Dr. Ajay Agarwal is a dedicated and highly skilled physiotherapist
               with extensive experience in treating musculoskeletal and
@@ -94,6 +117,10 @@ export default function FounderProfile() {
               training from Johns Hopkins University and Imperial College London.
             </p>
           </div>
+
+          <Link href="/contact#booking" className="btn-primary mt-8">
+            Book a consultation with Dr. Agarwal
+          </Link>
         </div>
       </div>
     </section>

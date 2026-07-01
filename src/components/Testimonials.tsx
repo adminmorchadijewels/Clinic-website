@@ -169,12 +169,6 @@ export default function Testimonials() {
   return (
     <section className="section-padding">
       <div className="container-content" ref={stackRef}>
-        {/* Dev-only reminder that testimonials are placeholders. Not rendered in production. */}
-        {process.env.NODE_ENV === "development" && (
-          <div className="mb-6 rounded-lg border border-yellow-400 bg-yellow-100 px-4 py-2 text-sm font-medium text-yellow-900">
-            ⚠️ USING REAL GOOGLE REVIEWS — Verify patient consent before launch
-          </div>
-        )}
         <div className="mb-10 max-w-xl">
           <p className="eyebrow mb-3">In their words</p>
           <BlurText

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useScrollReveal } from "@/lib/useScrollReveal";
+import { useSnapCarousel } from "@/lib/useSnapCarousel";
 import { Check } from "../Icons";
 import BlurText from "../BlurText";
 
@@ -60,6 +61,7 @@ export default function AwardsSection() {
     selector: "[data-reveal]",
     stagger: 0.06,
   });
+  const { containerRef, activeIndex } = useSnapCarousel<HTMLDivElement>();
 
   return (
     <section className="section-padding bg-[#F0F3EF]">
@@ -77,8 +79,8 @@ export default function AwardsSection() {
           </p>
         </div>
 
-        {/* PART 1 — award photo grid */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* PART 1 — award photos. Desktop (md+): 3-column grid. */}
+        <div className="hidden gap-5 sm:grid-cols-2 md:grid lg:grid-cols-3">
           {AWARDS.map((award) => (
             <figure
               key={award.src}
@@ -90,7 +92,7 @@ export default function AwardsSection() {
                   src={award.src}
                   alt={award.caption}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 1024px) 50vw, 33vw"
                   className="object-cover object-top transition-transform duration-300 ease-smooth group-hover:scale-[1.03]"
                 />
               </div>
@@ -99,6 +101,43 @@ export default function AwardsSection() {
               </figcaption>
             </figure>
           ))}
+        </div>
+
+        {/* Mobile (below md): horizontal snap-scroll carousel + dots. */}
+        <div className="md:hidden">
+          <div
+            ref={containerRef}
+            className="scrollbar-hide -mx-5 flex snap-x snap-mandatory flex-row gap-4 overflow-x-auto px-5"
+          >
+            {AWARDS.map((award) => (
+              <figure
+                key={award.src}
+                className="relative aspect-[4/3] w-[80vw] shrink-0 snap-center overflow-hidden rounded-xl"
+              >
+                <Image
+                  src={award.src}
+                  alt={award.caption}
+                  fill
+                  sizes="80vw"
+                  className="object-cover object-top"
+                />
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 text-sm text-white">
+                  {award.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="mt-4 flex justify-center gap-2">
+            {AWARDS.map((award, i) => (
+              <span
+                key={award.src}
+                aria-hidden="true"
+                className={`h-2 w-2 rounded-full ${
+                  activeIndex === i ? "bg-teal" : "bg-teal/30"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* PART 2 — achievements list */}

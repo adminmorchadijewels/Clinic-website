@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { SERVICES } from "@/lib/data";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { Icon, ArrowRight } from "../Icons";
+import { Icon, ArrowRight, ChevronLeft, ChevronRight } from "../Icons";
 import Typewriter from "./Typewriter";
 import ClipReveal from "./ClipReveal";
 
@@ -152,6 +152,13 @@ export default function ServicesExplorer() {
     return () => window.removeEventListener("resize", updateProgress);
   }, []);
 
+  // --- Arrow controls: scroll the rail by one card width (380px). ------------
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 380, behavior: reduced ? "auto" : "smooth" });
+  };
+
   // --- Mouse drag-to-scroll (touch uses native momentum scrolling). ----------
   const drag = useRef({ active: false, startX: 0, startScroll: 0, moved: 0 });
 
@@ -265,23 +272,43 @@ export default function ServicesExplorer() {
       <div className="py-12 sm:py-16 lg:py-20">
         <div className="container-content">
           <h2 className="sr-only">Our physiotherapy specialisations</h2>
-          <div
-            ref={trackRef}
-            onScroll={updateProgress}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onClickCapture={onClickCapture}
-            className="no-scrollbar flex select-none flex-col gap-5 px-5 sm:px-8 md:flex-row md:snap-x md:snap-proximity md:overflow-x-auto md:scroll-px-8 md:pb-2 md:cursor-grab md:active:cursor-grabbing"
-          >
-            {ordered.map((service) => (
-              <ServiceCard
-                key={service.slug}
-                service={service}
-                featured={service.slug === FEATURED_SLUG}
-              />
-            ))}
+          <div className="relative">
+            <div
+              ref={trackRef}
+              onScroll={updateProgress}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
+              onClickCapture={onClickCapture}
+              className="no-scrollbar flex select-none flex-col gap-5 px-5 sm:px-8 md:flex-row md:snap-x md:snap-proximity md:overflow-x-auto md:scroll-px-8 md:pb-2 md:cursor-grab md:active:cursor-grabbing"
+            >
+              {ordered.map((service) => (
+                <ServiceCard
+                  key={service.slug}
+                  service={service}
+                  featured={service.slug === FEATURED_SLUG}
+                />
+              ))}
+            </div>
+
+            {/* Prev / next arrows — desktop rail only (mobile is a vertical stack). */}
+            <button
+              type="button"
+              onClick={() => scrollByCard(-1)}
+              aria-label="Scroll to previous services"
+              className="absolute left-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-teal bg-white text-teal shadow-soft transition-colors duration-300 ease-smooth hover:bg-teal hover:text-white md:grid"
+            >
+              <ChevronLeft />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByCard(1)}
+              aria-label="Scroll to next services"
+              className="absolute right-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-teal bg-white text-teal shadow-soft transition-colors duration-300 ease-smooth hover:bg-teal hover:text-white md:grid"
+            >
+              <ChevronRight />
+            </button>
           </div>
 
           {/* Progress bar (desktop rail only). */}

@@ -75,9 +75,6 @@ export const STATS = [
   { value: 4000, suffix: "+", label: "Patients Successfully Treated", icon: "patients" },
   { value: 5.0, suffix: "★", label: "Google Rating", icon: "rating", decimals: 1 },
   { value: 25, suffix: "+", label: "Conditions Treated", icon: "conditions" },
-  { value: 40, suffix: "+", label: "Cities Reached", icon: "location" },
-  { value: 6, suffix: "+", label: "States", icon: "growth" },
-  { value: 5, suffix: "+", label: "Countries", icon: "globe" },
 ] as const;
 
 // --- SERVICES -----------------------------------------------------------------
@@ -162,11 +159,6 @@ export const PILLARS = [
     title: "Focused on Spine & Knee",
     body: "Deep specialization means sharper outcomes. We don't treat everything, we treat what we're best at.",
     icon: "spine",
-  },
-  {
-    title: "Cashless & TPA Facility",
-    body: "We accept cashless treatment through major insurance TPA providers — no upfront payment hassle.",
-    icon: "shield",
   },
 ] as const;
 

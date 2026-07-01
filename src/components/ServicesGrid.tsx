@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { SERVICES } from "@/lib/data";
 import { useScrollReveal } from "@/lib/useScrollReveal";
-import { Icon, ArrowRight } from "./Icons";
+import { useReducedMotion } from "@/lib/useReducedMotion";
+import { Icon, ArrowRight, ChevronLeft, ChevronRight } from "./Icons";
 import BlurText from "./BlurText";
 
 // One card is featured (larger) to break the grid's symmetry. Spine & back is
@@ -29,6 +31,27 @@ export default function ServicesGrid() {
   const featured = SERVICES.find((s) => s.slug === FEATURED_SLUG)!;
   const rest = SERVICES.filter((s) => s.slug !== FEATURED_SLUG);
 
+  // Mobile stepper: featured card first, then the rest. Fade out → swap → fade in.
+  const orderedMobile = [featured, ...rest];
+  const reduced = useReducedMotion();
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const current = orderedMobile[mobileIndex];
+
+  const step = (dir: 1 | -1) => {
+    const total = orderedMobile.length;
+    const next = (mobileIndex + dir + total) % total;
+    if (reduced) {
+      setMobileIndex(next);
+      return;
+    }
+    setVisible(false);
+    window.setTimeout(() => {
+      setMobileIndex(next);
+      setVisible(true);
+    }, 150);
+  };
+
   return (
     <section id="services" className="section-padding bg-white">
       <div className="container-content" ref={ref}>
@@ -45,7 +68,8 @@ export default function ServicesGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-fr lg:grid-cols-3">
+        {/* Desktop (md+): asymmetric grid — featured large card + 5 smaller. */}
+        <div className="hidden gap-4 sm:grid-cols-2 md:grid lg:auto-rows-fr lg:grid-cols-3">
           {/* Featured card — spans 2×2 on desktop, full width on tablet, plain
               single column on mobile (no fragile spanning at small sizes). */}
           <Link
@@ -112,6 +136,66 @@ export default function ServicesGrid() {
               </span>
             </Link>
           ))}
+        </div>
+
+        {/* Mobile (below md): single-card stepper with prev/next arrows. */}
+        <div className="md:hidden">
+          <p className="mb-3 text-sm font-semibold text-teal">
+            {mobileIndex + 1} of {orderedMobile.length}
+          </p>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => step(-1)}
+              aria-label="Previous service"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-teal bg-white text-teal transition-colors hover:bg-teal hover:text-white"
+            >
+              <ChevronLeft />
+            </button>
+
+            <Link
+              href={`/services/${current.slug}`}
+              className={`group relative flex flex-1 flex-col overflow-hidden rounded-2xl border p-6 transition-opacity duration-150 ${
+                visible ? "opacity-100" : "opacity-0"
+              } ${
+                current.slug === FEATURED_SLUG
+                  ? "border-teal/25 bg-gradient-to-br from-[#eef4f0] to-[#e2ede6]"
+                  : "border-teal/10 bg-surface"
+              }`}
+            >
+              {current.slug === FEATURED_SLUG && (
+                <span className="mb-4 inline-flex w-fit items-center rounded-full bg-teal/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-teal">
+                  Most treated
+                </span>
+              )}
+              <span className={`mb-5 h-14 w-14 ${iconChipBase}`}>
+                <Icon name={current.icon} width={28} height={28} />
+              </span>
+              <h3 className="font-heading text-xl font-medium text-charcoal">
+                {current.name}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                {current.blurb}
+              </p>
+              <span className={`mt-5 ${exploreClasses}`}>
+                Explore
+                <ArrowRight
+                  width={16}
+                  height={16}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => step(1)}
+              aria-label="Next service"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-teal bg-white text-teal transition-colors hover:bg-teal hover:text-white"
+            >
+              <ChevronRight />
+            </button>
+          </div>
         </div>
       </div>
     </section>

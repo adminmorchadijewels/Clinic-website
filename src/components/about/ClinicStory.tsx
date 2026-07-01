@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { useScrollReveal } from "@/lib/useScrollReveal";
 
 /**
@@ -12,6 +13,7 @@ export default function ClinicStory() {
     selector: "[data-reveal]",
     stagger: 0.12,
   });
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <section className="section-padding">
@@ -40,37 +42,102 @@ export default function ClinicStory() {
           </p>
         </div>
 
-        {/* Clinic photo gallery: one tall image left, two stacked right on
-            desktop; all three stacked on mobile. */}
+        {/* Clinic photo gallery. */}
         <div data-reveal className="order-first lg:order-none">
-          <div className="grid grid-cols-1 gap-4 sm:h-[480px] sm:grid-cols-2 sm:grid-rows-2">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft sm:aspect-auto sm:row-span-2 sm:h-full">
+          {/* Desktop (md+): three equal landscape photos side by side. */}
+          <div className="hidden gap-4 sm:grid-cols-3 md:grid">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft">
               <Image
                 src="/images/clinic-treatment-room.png"
                 alt="Elavive Physio treatment room with physiotherapy equipment, Jaipur"
                 fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                className="object-cover"
+                sizes="(max-width: 1024px) 33vw, 17vw"
+                className="object-cover object-center"
               />
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft sm:aspect-auto sm:h-full">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft">
               <Image
                 src="/images/clinic-reception.png"
                 alt="Elavive Physio reception and front desk, Milap Nagar Jaipur"
                 fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 25vw, 12vw"
-                className="object-cover"
+                sizes="(max-width: 1024px) 33vw, 17vw"
+                className="object-cover object-center"
               />
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft sm:aspect-auto sm:h-full">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-soft">
               <Image
                 src="/images/clinic-office.png"
                 alt="Elavive Physio consultation area, Jaipur"
                 fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 25vw, 12vw"
-                className="object-cover"
+                sizes="(max-width: 1024px) 33vw, 17vw"
+                className="object-cover object-center"
               />
             </div>
+          </div>
+
+          {/* Mobile (below md): first photo + tap-to-expand accordion for the rest. */}
+          <div className="md:hidden">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-soft">
+              <Image
+                src="/images/clinic-treatment-room.png"
+                alt="Elavive Physio treatment room with physiotherapy equipment, Jaipur"
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+            </div>
+
+            <div
+              className={`overflow-hidden motion-safe:transition-[max-height] motion-safe:duration-[400ms] motion-safe:ease-smooth ${
+                expanded ? "max-h-[1400px]" : "max-h-0"
+              }`}
+            >
+              <div className="space-y-4 pt-4">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-soft">
+                  <Image
+                    src="/images/clinic-reception.png"
+                    alt="Elavive Physio reception and front desk, Milap Nagar Jaipur"
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
+                  />
+                </div>
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-soft">
+                  <Image
+                    src="/images/clinic-office.png"
+                    alt="Elavive Physio consultation area, Jaipur"
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              aria-expanded={expanded}
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-teal"
+            >
+              {expanded ? "Show less" : "See all 3 photos"}
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className={`motion-safe:transition-transform motion-safe:duration-300 ${
+                  expanded ? "rotate-180" : ""
+                }`}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

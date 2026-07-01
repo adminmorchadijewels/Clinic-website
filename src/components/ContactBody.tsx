@@ -101,7 +101,7 @@ export default function ContactBody() {
               <p className="mt-3 font-medium text-charcoal">
                 Elavive Physio — Spine &amp; Knee Clinic
               </p>
-              <p className="mt-1 leading-relaxed text-muted">
+              <p className="mt-1 break-words leading-relaxed text-muted">
                 {CLINIC_CONFIG.address.line1},<br />
                 {CLINIC_CONFIG.address.line2},<br />
                 {CLINIC_CONFIG.address.area}, {CLINIC_CONFIG.address.city},{" "}
@@ -142,7 +142,7 @@ export default function ContactBody() {
               <p className="mt-1">
                 <a
                   href={`mailto:${CLINIC_CONFIG.contact.email}`}
-                  className="text-muted transition-colors hover:text-teal"
+                  className="break-words text-muted transition-colors hover:text-teal"
                 >
                   {CLINIC_CONFIG.contact.email}
                 </a>
