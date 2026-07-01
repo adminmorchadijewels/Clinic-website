@@ -7,6 +7,8 @@ import MissionVision from "@/components/about/MissionVision";
 import CoreValues from "@/components/about/CoreValues";
 import FounderProfile from "@/components/about/FounderProfile";
 import Certifications from "@/components/about/Certifications";
+import ClinicGallery from "@/components/about/ClinicGallery";
+import AwardsSection from "@/components/about/AwardsSection";
 import AboutCTA from "@/components/about/AboutCTA";
 
 export const metadata: Metadata = {
@@ -40,6 +42,8 @@ export default function AboutPage() {
         <CoreValues />
         <FounderProfile />
         <Certifications />
+        <ClinicGallery />
+        <AwardsSection />
         <AboutCTA />
       </main>
       <Footer />
